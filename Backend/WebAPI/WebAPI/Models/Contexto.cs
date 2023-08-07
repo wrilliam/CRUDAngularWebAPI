@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WebAPI.Config;
 
 namespace WebAPI.Models
 {
@@ -12,6 +13,16 @@ namespace WebAPI.Models
         public Contexto(DbContextOptions<Contexto> opcoes) : base(opcoes)
         {
         }
+        #endregion
+
+        #region Métodos
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new PessoaConfig());
+            base.OnModelCreating(modelBuilder);
+        }
+
         #endregion
     }
 }
