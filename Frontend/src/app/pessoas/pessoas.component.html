@@ -20,7 +20,7 @@
                 <td>{{pessoa.documento}}</td>
                 <td>{{pessoa.endereco}}</td>
                 <td>
-                    <button type="button" class="btn btn-sm btn-outline-info">Atualizar</button>
+                    <button type="button" class="btn btn-sm btn-outline-info" (click)="ExibirFormularioAtualizacao(pessoa.idPessoa)">Atualizar</button>
                     <button type="button" class="btn btn-sm btn-outline-danger">Excluir</button>
                 </td>
             </tr>
