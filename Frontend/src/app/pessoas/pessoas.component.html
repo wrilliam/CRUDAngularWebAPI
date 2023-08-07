@@ -21,7 +21,7 @@
                 <td>{{pessoa.endereco}}</td>
                 <td>
                     <button type="button" class="btn btn-sm btn-outline-info" (click)="ExibirFormularioAtualizacao(pessoa.idPessoa)">Atualizar</button>
-                    <button type="button" class="btn btn-sm btn-outline-danger">Excluir</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger" (click)="ExcluirRegistro(pessoa.idPessoa)">Excluir</button>
                 </td>
             </tr>
         </table>
@@ -56,7 +56,7 @@
                 <div class="container">
                     <div class="row">
                         <div>
-                            <button type="submit" class="btn btn-sm btn-outline-secondary" (click)="EnviarFormulario()">
+                            <button type="submit" class="btn btn-sm btn-outline-secondary">
                                 Salvar
                             </button>
                             <button type="button" class="btn btn-sm btn-light" (click)="Voltar()">
