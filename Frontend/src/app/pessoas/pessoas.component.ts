@@ -14,11 +14,12 @@ export class PessoasComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    this.tituloFormulario = 'Nova Pessoa'
     this.formulario = new FormGroup({
-      tipo: new FormControl(null),
-      documento: new FormControl(null),
       nome: new FormControl(null),
       apelido: new FormControl(null),
+      tipo: new FormControl(null),
+      documento: new FormControl(null),
       endereco: new FormControl(null)
     })
   }
