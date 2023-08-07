@@ -1,6 +1,35 @@
 <div class="container p-5">
+    <div class="border boder-light rounded p-5" *ngIf="visivelTabela">
+        <div>
+            <button type="button" class="btn btn-sm btn-outline-secondary" (click)="ExibirFormularioCadastro()">Novo Registro</button>
+        </div>
+        <br>
+        <table class="table table-striped table-hover table-sm" *ngIf="pessoas">
+            <tr class="thead-light">
+                <th>Nome</th>
+                <th>Apelido</th>
+                <th>Tipo</th>
+                <th>Documento</th>
+                <th>Endereço</th>
+                <th></th>
+            </tr>
+            <tr *ngFor="let pessoa of pessoas">
+                <td>{{pessoa.nome}}</td>
+                <td>{{pessoa.apelido}}</td>
+                <td>{{pessoa.tipo}}</td>
+                <td>{{pessoa.documento}}</td>
+                <td>{{pessoa.endereco}}</td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-outline-info">Atualizar</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger">Excluir</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="container p-5" *ngIf="visivelFormulario">
     <div class="row">
-        <div class="col-6 border border-light rounded p-5 shadow" *ngIf="formulario">
+        <div class="col-6 border boder-light rounded p-5 shadow" *ngIf="formulario">
             <h6>{{tituloFormulario}}</h6>
             <hr>
             <form [formGroup]="formulario" (ngSubmit)="EnviarFormulario()">
@@ -27,10 +56,10 @@
                 <div class="container">
                     <div class="row">
                         <div>
-                            <button type="submit" class="btn btn-sm btn-outline-secondary">
+                            <button type="submit" class="btn btn-sm btn-outline-secondary" (click)="EnviarFormulario()">
                                 Salvar
                             </button>
-                            <button type="button" class="btn btn-sm btn-light">
+                            <button type="button" class="btn btn-sm btn-light" (click)="Voltar()">
                                 Voltar
                             </button>
                         </div>

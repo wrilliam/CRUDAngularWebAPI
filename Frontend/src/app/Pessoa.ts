@@ -1,9 +1,9 @@
 export class Pessoa {
     idPessoa!: number
-    tipo!: string
-    documento!: string
     nome!: string
     apelido!: string
+    tipo!: string
+    documento!: string
     endereco!: string
     dataCriacao!: Date
     dataAtualizacao!: Date
