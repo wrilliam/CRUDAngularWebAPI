@@ -10,11 +10,14 @@ import { AppComponent } from './app.component';
 
 import { PessoasService } from './pessoas.service';
 import { PessoasComponent } from './pessoas/pessoas.component';
+import { DepartamentosService } from './departamentos.service';
+import { DepartamentosComponent } from './departamentos/departamentos.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PessoasComponent
+    PessoasComponent,
+    DepartamentosComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +26,7 @@ import { PessoasComponent } from './pessoas/pessoas.component';
     HttpClientModule,
     ReactiveFormsModule,
   ],
-  providers: [HttpClientModule, PessoasService],
+  providers: [HttpClientModule, PessoasService, DepartamentosService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
