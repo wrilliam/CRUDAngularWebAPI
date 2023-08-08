@@ -9,7 +9,7 @@ import { Pessoa } from '../Pessoa';
   templateUrl: './departamentos.component.html',
   styleUrls: ['./departamentos.component.css']
 })
-export class DepartamentosComponent implements OnInit {
+export class DepartamentosComponent {
   formulario: any
   tituloFormulario!: string
   departamentos!: Departamento[]
@@ -20,16 +20,6 @@ export class DepartamentosComponent implements OnInit {
   visivelFormulario: boolean = false
 
   constructor(private departamentosService: DepartamentosService) {}
-
-  ngOnInit(): void {
-    this.departamentosService.Select().subscribe(resultado => {
-      this.departamentos = resultado
-    })
-
-    this.departamentosService.FetchPessoas().subscribe(pessoas => {
-      this.pessoas = pessoas;
-    });
-  }
 
   EnviarFormulario(): void {
     const departamento: Departamento = this.formulario.value;
