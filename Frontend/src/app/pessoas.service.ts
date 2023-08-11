@@ -13,29 +13,30 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class PessoasService {
-  url = 'https://localhost:7088/api/pessoas'
+  baseUrl = 'https://localhost:7088/api'
+  pessoasUrl = `${this.baseUrl}/pessoas`
 
   constructor(private http: HttpClient) { }
 
   Select(): Observable<Pessoa[]> {
-    return this.http.get<Pessoa[]>(this.url)
+    return this.http.get<Pessoa[]>(this.pessoasUrl)
   }
 
   SelectById(idPessoa: number): Observable<Pessoa> {
-    const apiUrl = `${this.url}/${idPessoa}`
+    const apiUrl = `${this.pessoasUrl}/${idPessoa}`
     return this.http.get<Pessoa>(apiUrl)
   }
 
   Insert(pessoa: Pessoa): Observable<any> {
-    return this.http.post<Pessoa>(this.url, pessoa, httpOptions)
+    return this.http.post<Pessoa>(this.pessoasUrl, pessoa, httpOptions)
   }
 
   Update(pessoa: Pessoa): Observable<any> {
-    return this.http.put<Pessoa>(this.url, pessoa, httpOptions)
+    return this.http.put<Pessoa>(this.pessoasUrl, pessoa, httpOptions)
   }
 
   Delete(idPessoa: number): Observable<any> {
-    const apiUrl = `${this.url}/${idPessoa}`
+    const apiUrl = `${this.pessoasUrl}/${idPessoa}`
     return this.http.delete<number>(apiUrl, httpOptions)
   }
 }

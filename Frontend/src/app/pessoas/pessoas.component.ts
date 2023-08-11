@@ -2,8 +2,6 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Pessoa } from '../Pessoa';
 import { PessoasService } from '../pessoas.service';
-import { Departamento } from '../Departamento';
-import { DepartamentosService } from '../departamentos.service';
 
 @Component({
   selector: 'app-pessoas',
@@ -15,27 +13,16 @@ export class PessoasComponent implements OnInit {
   tituloFormulario!: string
   pessoas!: Pessoa[]
   idPessoa!: number
-  departamentos!: Departamento[]
   idDepartamento!: number
 
   visivelTabela: boolean = true
   visivelFormulario: boolean = false
-
-  private departamentosService!: DepartamentosService
 
   constructor(private pessoasService: PessoasService) {}
 
   ngOnInit(): void {
     this.pessoasService.Select().subscribe(resultado => {
       this.pessoas = resultado
-    })
-
-    this.departamentosService.Select().subscribe(resultado => {
-      this.departamentos = resultado
-    })
-
-    this.departamentosService.FetchPessoas().subscribe(pessoas => {
-      this.pessoas = pessoas
     })
   }
 

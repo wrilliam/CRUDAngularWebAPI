@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule } from '@angular/forms';
 import { Departamento } from '../Departamento';
 import { DepartamentosService } from '../departamentos.service';
 import { Pessoa } from '../Pessoa';
+import { PessoasService } from '../pessoas.service';
 
 @Component({
   selector: 'app-departamentos',
   templateUrl: './departamentos.component.html',
   styleUrls: ['./departamentos.component.css']
 })
-export class DepartamentosComponent {
+export class DepartamentosComponent implements OnInit {
   formulario: any
   tituloFormulario!: string
+  departamento: Departamento = new Departamento()
   departamentos!: Departamento[]
   idDepartamento!: number
   pessoas: Pessoa[] = []
@@ -19,7 +21,15 @@ export class DepartamentosComponent {
   visivelTabela: boolean = true
   visivelFormulario: boolean = false
 
-  constructor(private departamentosService: DepartamentosService) {}
+  constructor(private departamentosService: DepartamentosService, private pessoasService: PessoasService) {}
+
+  ngOnInit(): void {
+    this.departamentosService.Select().subscribe(resultado => {
+      this.departamentos = resultado
+    })
+
+    this.FetchPessoas()
+  }
 
   EnviarFormulario(): void {
     const departamento: Departamento = this.formulario.value;
@@ -82,6 +92,17 @@ export class DepartamentosComponent {
         this.departamentos = resultado
       })
     })
+  }
+
+  FetchPessoas(): void {
+    this.pessoasService.Select().subscribe(
+      pessoas => {
+        this.pessoas = pessoas
+      },
+      erro => {
+        console.error('Ocorreu um erro ao resgatar a lista de pessoas', erro)
+      }
+    )
   }
 
 }
