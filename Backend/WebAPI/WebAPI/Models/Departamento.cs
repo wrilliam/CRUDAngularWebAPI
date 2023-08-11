@@ -15,5 +15,9 @@ namespace WebAPI.Models
         [Required]
         public int IdResponsavel { get; set; }
         public virtual Pessoa Responsavel { get; set; }
+        [Column("DataCriacao")]
+        public DateTime DataCriacao { get; set; } = DateTime.UtcNow;
+        [Column("DataAtualizacao")]
+        public DateTime DataAtualizacao { get; set; } = DateTime.UtcNow;
     }
 }
