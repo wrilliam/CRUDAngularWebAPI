@@ -27,7 +27,5 @@ namespace WebAPI.Models
         public DateTime DataCriacao { get; set; } = DateTime.UtcNow;
         [Column("DataAtualizacao")]
         public DateTime DataAtualizacao { get; set; } = DateTime.UtcNow;
-
-        public ICollection<Departamento> Departamentos { get; set; }
     }
 }

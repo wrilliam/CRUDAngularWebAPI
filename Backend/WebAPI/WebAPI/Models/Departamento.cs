@@ -14,6 +14,7 @@ namespace WebAPI.Models
         [Column("IdResponsavel")]
         [Required]
         public int IdResponsavel { get; set; }
+        [ForeignKey("IdResponsavel")]
         public virtual Pessoa Responsavel { get; set; }
         [Column("DataCriacao")]
         public DateTime DataCriacao { get; set; } = DateTime.UtcNow;

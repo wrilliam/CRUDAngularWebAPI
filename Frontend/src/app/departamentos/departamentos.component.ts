@@ -13,7 +13,6 @@ import { PessoasService } from '../pessoas.service';
 export class DepartamentosComponent implements OnInit {
   formulario: any
   tituloFormulario!: string
-  departamento: Departamento = new Departamento()
   departamentos!: Departamento[]
   idDepartamento!: number
   pessoas: Pessoa[] = []

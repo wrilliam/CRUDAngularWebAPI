@@ -52,7 +52,7 @@ namespace WebAPI.Migrations
 
                     b.HasIndex("IdResponsavel");
 
-                    b.ToTable("Departamentos");
+                    b.ToTable("Departamentos", (string)null);
                 });
 
             modelBuilder.Entity("WebAPI.Models.Pessoa", b =>
@@ -102,7 +102,7 @@ namespace WebAPI.Migrations
                     b.HasIndex("Documento")
                         .IsUnique();
 
-                    b.ToTable("Pessoas");
+                    b.ToTable("Pessoas", (string)null);
                 });
 
             modelBuilder.Entity("WebAPI.Models.Departamento", b =>

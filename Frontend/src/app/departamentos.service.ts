@@ -31,12 +31,12 @@ export class DepartamentosService {
     return this.http.get<Departamento>(apiUrl)
   }
 
-  Insert(Departamento: Departamento): Observable<any> {
-    return this.http.post<Departamento>(this.departamentosUrl, Departamento, httpOptions)
+  Insert(departamento: Departamento): Observable<any> {
+    return this.http.post<Departamento>(this.departamentosUrl, departamento, httpOptions)
   }
 
-  Update(Departamento: Departamento): Observable<any> {
-    return this.http.put<Departamento>(this.departamentosUrl, Departamento, httpOptions)
+  Update(departamento: Departamento): Observable<any> {
+    return this.http.put<Departamento>(this.departamentosUrl, departamento, httpOptions)
   }
 
   Delete(idDepartamento: number): Observable<any> {
