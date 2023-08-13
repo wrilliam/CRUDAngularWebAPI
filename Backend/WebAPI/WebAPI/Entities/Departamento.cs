@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace WebAPI.Models
+namespace WebAPI.Entities
 {
     public class Departamento
     {
@@ -17,8 +17,8 @@ namespace WebAPI.Models
         [ForeignKey("IdResponsavel")]
         public virtual Pessoa Responsavel { get; set; }
         [Column("DataCriacao")]
-        public DateTime DataCriacao { get; set; } = DateTime.UtcNow;
+        public DateTime DataCriacao { get; set; }
         [Column("DataAtualizacao")]
-        public DateTime DataAtualizacao { get; set; } = DateTime.UtcNow;
+        public DateTime DataAtualizacao { get; set; }
     }
 }

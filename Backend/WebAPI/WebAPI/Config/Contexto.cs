@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebAPI.Config;
+using WebAPI.Entities;
 
-namespace WebAPI.Models
+namespace WebAPI.Config
 {
     public class Contexto : DbContext
     {

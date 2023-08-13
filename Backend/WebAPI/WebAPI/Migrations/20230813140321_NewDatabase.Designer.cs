@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WebAPI.Models;
+using WebAPI.Config;
 
 #nullable disable
 
 namespace WebAPI.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20230807222425_Departamentos")]
-    partial class Departamentos
+    [Migration("20230813140321_NewDatabase")]
+    partial class NewDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace WebAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("WebAPI.Models.Departamento", b =>
+            modelBuilder.Entity("WebAPI.Entities.Departamento", b =>
                 {
                     b.Property<int>("IdDepartamento")
                         .ValueGeneratedOnAdd()
@@ -33,6 +33,14 @@ namespace WebAPI.Migrations
                         .HasColumnName("IdDepartamento");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDepartamento"));
+
+                    b.Property<DateTime>("DataAtualizacao")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DataAtualizacao");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DataCriacao");
 
                     b.Property<int>("IdResponsavel")
                         .HasColumnType("int")
@@ -50,7 +58,7 @@ namespace WebAPI.Migrations
                     b.ToTable("Departamentos");
                 });
 
-            modelBuilder.Entity("WebAPI.Models.Pessoa", b =>
+            modelBuilder.Entity("WebAPI.Entities.Pessoa", b =>
                 {
                     b.Property<int>("IdPessoa")
                         .ValueGeneratedOnAdd()
@@ -100,20 +108,15 @@ namespace WebAPI.Migrations
                     b.ToTable("Pessoas");
                 });
 
-            modelBuilder.Entity("WebAPI.Models.Departamento", b =>
+            modelBuilder.Entity("WebAPI.Entities.Departamento", b =>
                 {
-                    b.HasOne("WebAPI.Models.Pessoa", "Responsavel")
-                        .WithMany("Departamentos")
+                    b.HasOne("WebAPI.Entities.Pessoa", "Responsavel")
+                        .WithMany()
                         .HasForeignKey("IdResponsavel")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Responsavel");
-                });
-
-            modelBuilder.Entity("WebAPI.Models.Pessoa", b =>
-                {
-                    b.Navigation("Departamentos");
                 });
 #pragma warning restore 612, 618
         }

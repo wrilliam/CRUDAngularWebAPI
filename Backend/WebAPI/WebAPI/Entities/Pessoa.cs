@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebAPI.Models
+namespace WebAPI.Entities
 {
     public class Pessoa
     {
@@ -24,8 +24,8 @@ namespace WebAPI.Models
         [Required]
         public string Endereco { get; set; }
         [Column("DataCriacao")]
-        public DateTime DataCriacao { get; set; } = DateTime.UtcNow;
+        public DateTime DataCriacao { get; set; }
         [Column("DataAtualizacao")]
-        public DateTime DataAtualizacao { get; set; } = DateTime.UtcNow;
+        public DateTime DataAtualizacao { get; set; }
     }
 }

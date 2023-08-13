@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WebAPI.Models;
+using WebAPI.Config;
 
 #nullable disable
 
@@ -22,7 +22,7 @@ namespace WebAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("WebAPI.Models.Departamento", b =>
+            modelBuilder.Entity("WebAPI.Entities.Departamento", b =>
                 {
                     b.Property<int>("IdDepartamento")
                         .ValueGeneratedOnAdd()
@@ -52,10 +52,10 @@ namespace WebAPI.Migrations
 
                     b.HasIndex("IdResponsavel");
 
-                    b.ToTable("Departamentos", (string)null);
+                    b.ToTable("Departamentos");
                 });
 
-            modelBuilder.Entity("WebAPI.Models.Pessoa", b =>
+            modelBuilder.Entity("WebAPI.Entities.Pessoa", b =>
                 {
                     b.Property<int>("IdPessoa")
                         .ValueGeneratedOnAdd()
@@ -102,23 +102,18 @@ namespace WebAPI.Migrations
                     b.HasIndex("Documento")
                         .IsUnique();
 
-                    b.ToTable("Pessoas", (string)null);
+                    b.ToTable("Pessoas");
                 });
 
-            modelBuilder.Entity("WebAPI.Models.Departamento", b =>
+            modelBuilder.Entity("WebAPI.Entities.Departamento", b =>
                 {
-                    b.HasOne("WebAPI.Models.Pessoa", "Responsavel")
-                        .WithMany("Departamentos")
+                    b.HasOne("WebAPI.Entities.Pessoa", "Responsavel")
+                        .WithMany()
                         .HasForeignKey("IdResponsavel")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Responsavel");
-                });
-
-            modelBuilder.Entity("WebAPI.Models.Pessoa", b =>
-                {
-                    b.Navigation("Departamentos");
                 });
 #pragma warning restore 612, 618
         }
