@@ -1,15 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebAPI.Models
 {
     public class PessoaModel
     {
         public int IdPessoa { get; set; }
-        public string Nome { get; set; }
-        public string Apelido { get; set; }
-        public string Tipo { get; set; }
-        public string Documento { get; set; }
-        public string Endereco { get; set; }
+        [Required(ErrorMessage = "Insira o nome.")]
+        public string? Nome { get; set; }
+        public string? Apelido { get; set; }
+        [Required(ErrorMessage = "Insira o tipo. PF ou PJ?")]
+        public string? Tipo { get; set; }
+        [Required(ErrorMessage = "Insira o documento. CPF ou CNPJ.")]
+        public string? Documento { get; set; }
+        [Required(ErrorMessage = "Insira o endereço.")]
+        public string? Endereco { get; set; }
     }
 }

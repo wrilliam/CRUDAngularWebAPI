@@ -28,39 +28,40 @@ namespace WebAPI.Controllers
         #region Métodos
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Pessoa>))]
         public async Task<ActionResult<IEnumerable<Pessoa>>> SelectAsync()
         {
             return await _contexto.Pessoas.ToListAsync();
         }
 
         [HttpGet("{idPessoa}")]
-        public async Task<ActionResult<PessoaModel>> SelectByIdAsync(int idPessoa)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Pessoa))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
+        public async Task<ActionResult<Pessoa>> SelectByIdAsync(int idPessoa)
         {
-            Pessoa pessoa = await _contexto.Pessoas.FirstOrDefaultAsync(p => p.IdPessoa == idPessoa);
-
+            Pessoa? pessoa = await _contexto.Pessoas.FirstOrDefaultAsync(p => p.IdPessoa == idPessoa);
             if (pessoa == null)
                 return NotFound("Não foi encontrado registro algum com o identificador fornecido.");
 
             return Ok(pessoa);
         }
 
-        /// <summary>
-        /// Criar um novo registro de pessoa física ou jurídica.
-        /// </summary>
-        /// <param name="model">Dados da pessoa: nome, apelido ou nome social, tipo (F ou J), documento (CPF ou CNPJ) e endereço.</param>
-        /// <returns>Mensagem de sucesso ou erro.</returns>
         [HttpPost]
-        public async Task<ActionResult<PessoaModel>> InsertAsync(PessoaModel model)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        public async Task<ActionResult<Pessoa>> InsertAsync(PessoaModel model)
         {
-            Pessoa pessoa = await _contexto.Pessoas.FirstOrDefaultAsync(p => p.Documento == model.Documento);
+            if (!ModelState.IsValid)
+                return BadRequest("Preencha todos os campos obrigatórios.");
 
+            Pessoa? pessoa = await _contexto.Pessoas.FirstOrDefaultAsync(p => p.Documento == model.Documento);
             if (pessoa != null)
                 return BadRequest("Já existe uma pessoa registrada com o documento fornecido.");
 
             pessoa = new Pessoa {
                 IdPessoa = model.IdPessoa,
                 Nome = model.Nome,
-                Apelido = model.Apelido,
+                Apelido = (model.Apelido == null) ? "" : model.Apelido,
                 Tipo = model.Tipo,
                 Documento = model.Documento,
                 Endereco = model.Endereco,
@@ -75,10 +76,15 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
         public async Task<ActionResult> UpdateAsync(PessoaModel model)
         {
-            Pessoa pessoa = await _contexto.Pessoas.FirstOrDefaultAsync(p => p.IdPessoa == model.IdPessoa);
+            if (!ModelState.IsValid)
+                return BadRequest("Preencha todos os campos obrigatórios.");
 
+            Pessoa? pessoa = await _contexto.Pessoas.FirstOrDefaultAsync(p => p.IdPessoa == model.IdPessoa);
             if (pessoa == null)
                 return NotFound("Não existe registro com o identificador fornecido. Você quer criar um novo?");
 
@@ -96,9 +102,11 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("{idPessoa}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
         public async Task<ActionResult> DeleteAsync(int idPessoa)
         {
-            Pessoa pessoa = await _contexto.Pessoas.FirstOrDefaultAsync(p => p.IdPessoa == idPessoa);
+            Pessoa? pessoa = await _contexto.Pessoas.FirstOrDefaultAsync(p => p.IdPessoa == idPessoa);
 
             if (pessoa == null)
                 return NotFound("Não existe registro algum com o identificador fornecido.");

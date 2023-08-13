@@ -10,12 +10,12 @@ namespace WebAPI.Entities
         public int IdDepartamento { get; set; }
         [Column("Nome")]
         [Required]
-        public string Nome { get; set; }
+        public string? Nome { get; set; }
         [Column("IdResponsavel")]
         [Required]
         public int IdResponsavel { get; set; }
         [ForeignKey("IdResponsavel")]
-        public virtual Pessoa Responsavel { get; set; }
+        public virtual Pessoa? Responsavel { get; set; }
         [Column("DataCriacao")]
         public DateTime DataCriacao { get; set; }
         [Column("DataAtualizacao")]

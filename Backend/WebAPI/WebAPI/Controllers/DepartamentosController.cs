@@ -28,29 +28,38 @@ namespace WebAPI.Controllers
         #region Métodos
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Departamento>))]
         public async Task<ActionResult<IEnumerable<Departamento>>> SelectAsync()
         {
             return await _contexto.Departamentos.ToListAsync();
         }
 
         [HttpGet("{idDepartamento}")]
-        public async Task<ActionResult<DepartamentoModel>> SelectByIdAsync(int idDepartamento)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Departamento))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
+        public async Task<ActionResult<Departamento>> SelectByIdAsync(int idDepartamento)
         {
-            Departamento departamento = await _contexto.Departamentos.FirstOrDefaultAsync(p => p.IdDepartamento == idDepartamento);
+            Departamento? departamento = await _contexto.Departamentos.FirstOrDefaultAsync(p => p.IdDepartamento == idDepartamento);
             if (departamento == null)
                 return NotFound("Não foi encontrado registro algum com o identificador fornecido.");
 
             return Ok(departamento);
         }
-        //FirstOrDefaultAsync(p => p.Documento == model.Documento)
+
         [HttpPost]
-        public async Task<ActionResult<DepartamentoModel>> InsertAsync(DepartamentoModel model)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
+        public async Task<ActionResult<Departamento>> InsertAsync(DepartamentoModel model)
         {
-            Departamento departamento = await _contexto.Departamentos.FirstOrDefaultAsync(p => p.Nome == model.Nome);
+            if (!ModelState.IsValid)
+                return BadRequest("Preencha todos os campos obrigatórios.");
+
+            Departamento? departamento = await _contexto.Departamentos.FirstOrDefaultAsync(p => p.Nome == model.Nome);
             if (departamento != null)
                 return BadRequest("Já existe um departamento registrado com o nome fornecido.");
 
-            Pessoa pessoa = await _contexto.Pessoas.FirstOrDefaultAsync(p => p.IdPessoa == model.IdResponsavel);
+            Pessoa? pessoa = await _contexto.Pessoas.FirstOrDefaultAsync(p => p.IdPessoa == model.IdResponsavel);
             if (departamento == null)
                 return NotFound("Não foi encontrado registro algum com o identificador fornecido para o responsável.");
 
@@ -69,10 +78,15 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
         public async Task<ActionResult> UpdateAsync(DepartamentoModel model)
         {
-            Departamento departamento = await _contexto.Departamentos.FirstOrDefaultAsync(p => p.IdDepartamento == model.IdDepartamento);
+            if (!ModelState.IsValid)
+                return BadRequest("Preencha todos os campos obrigatórios.");
 
+            Departamento? departamento = await _contexto.Departamentos.FirstOrDefaultAsync(p => p.IdDepartamento == model.IdDepartamento);
             if (departamento == null)
                 return NotFound("Não existe registro com o identificador fornecido. Você quer criar um novo?");
 
@@ -87,9 +101,11 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("{idDepartamento}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
         public async Task<ActionResult> DeleteAsync(int idDepartamento)
         {
-            Departamento departamento = await _contexto.Departamentos.FirstOrDefaultAsync(p => p.IdDepartamento == idDepartamento);
+            Departamento? departamento = await _contexto.Departamentos.FirstOrDefaultAsync(p => p.IdDepartamento == idDepartamento);
 
             if (departamento == null)
                 return NotFound("Não existe registro algum com o identificador fornecido.");
